@@ -1,0 +1,5 @@
+# One workspace for all twelve projects, so they share a target/ directory
+# and a lockfile. `cargo new projects/<name>` adds a member automatically.
+[workspace]
+resolver = "3"
+members = ["projects/*"]
