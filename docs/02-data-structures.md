@@ -1,6 +1,6 @@
-# 05 · Your Own Data Structures
+# 02 · Your Own Data Structures
 
-> Level 5 of 12 · about 10 nights · crate: `projects/structures` (library)
+> Level 2 of 5 · about 10 nights · crate: `projects/structures` (library)
 
 ## Why this project
 
@@ -25,7 +25,7 @@ Classic data structures, API design that mirrors the standard library, testing a
 
 ## Allowed crates
 
-None in the library. Dev: `proptest`, `criterion`. No `unsafe` (that is project 11).
+None in the library. Dev: `proptest`, `criterion`. No `unsafe` (not part of this ladder).
 
 ## Spec
 
@@ -78,6 +78,6 @@ Four types, all generic, all documented, all with iterators where it makes sense
 
 ## Reading
 
-- Learn Rust With Entirely Too Many Linked Lists, the safe chapters only. Stop when it reaches `unsafe` and come back in project 11: <https://rust-unofficial.github.io/too-many-lists/>
+- Learn Rust With Entirely Too Many Linked Lists, the safe chapters only. Stop when it reaches `unsafe`: <https://rust-unofficial.github.io/too-many-lists/>
 - The Rust Book: ch. 10 (Generics, Traits, Lifetimes), ch. 15 (Smart Pointers)
 - The `std::option::Option` docs page, top to bottom

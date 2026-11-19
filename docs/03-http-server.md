@@ -1,10 +1,10 @@
-# 06 · HTTP Server from Scratch
+# 03 · HTTP Server from Scratch
 
-> Level 6 of 12 · about 11 nights · crate: `projects/httpd`
+> Level 3 of 5 · about 11 nights · crate: `projects/httpd`
 
 ## Why this project
 
-You learn HTTP by implementing it, and you learn Rust's concurrency model (threads, `Send`/`Sync`, `Arc`, `Mutex`, channels) by needing it. Using only the standard library means nothing is hidden. After this, frameworks like axum will make sense instead of looking like magic.
+You learn HTTP by implementing it, and you learn Rust's concurrency model (threads, `Send`/`Sync`, `Arc`, `Mutex`, channels) by needing it. Using only the standard library means nothing is hidden. After this, the async server in project 05 will make sense instead of looking like magic, and you will be able to compare threads with tasks from experience.
 
 The Rust Book's final chapter builds a much smaller version. Use it as a hint when stuck, not as a script.
 
@@ -85,7 +85,7 @@ HTTP/1.1 on the wire, routing, static file serving, path traversal defence, time
 - Chunked transfer encoding.
 - Path parameters in the router (`/users/:id`).
 - An access log in Common Log Format, written by a dedicated logger thread fed by a channel.
-- Replace the thread pool with a non-blocking event loop using `mio` (a preview of project 12, track C).
+- Replace the thread pool with a non-blocking event loop using `mio`.
 - TLS with `rustls`.
 
 ## Reading

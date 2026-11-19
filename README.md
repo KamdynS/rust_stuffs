@@ -1,32 +1,26 @@
 # Rust Ladder
 
-Twelve projects, easiest to hardest, built a little every night. By the end you will have used nearly every part of Rust and built the things working developers actually build: CLIs, an HTTP server, a REST API, a database, an interpreter.
+Five projects, worked on a little every night. One warm-up, then four hard ones: linked data structures, a threaded HTTP server, an interpreter, and an async Redis clone. Between them they cover ownership, lifetimes, traits, smart pointers, concurrency, async and performance work.
 
 ## The ladder
 
 | #  | Project | Main Rust topics | Nights |
 |----|---------|------------------|--------|
-| 01 | [Guessing game and unit converter](docs/01-guessing-game-and-converter.md) | cargo, variables, `match`, first ownership | 3–4 |
-| 02 | [grep clone](docs/02-grep-clone.md) | borrowing, `Result` and `?`, iterators, tests | 6 |
-| 03 | [Todo CLI with JSON storage](docs/03-todo-cli.md) | structs, enums, modules, serde, error types | 6 |
-| 04 | [Calculator with tokenizer and parser](docs/04-calculator.md) | recursive enums, `Box`, pattern matching | 7 |
-| 05 | [Your own data structures](docs/05-data-structures.md) | generics, traits, lifetimes, `Rc<RefCell>` | 10 |
-| 06 | [HTTP server from scratch](docs/06-http-server.md) | TCP, threads, `Arc<Mutex>`, channels | 11 |
-| 07 | [REST API with axum, sqlx, tokio](docs/07-rest-api.md) | async/await, database, middleware, auth | 13 |
-| 08 | [WebSocket chat server or web crawler](docs/08-chat-or-crawler.md) | tasks, `select!`, backpressure, cancellation | 10 |
-| 09 | [Redis clone](docs/09-redis-clone.md) | byte parsing, zero-copy, persistence, profiling | 18 |
-| 10 | [Interpreter plus a derive macro](docs/10-interpreter-and-macros.md) | trait objects, lifetimes, macros | 22 |
-| 11 | [Own `Vec`, arena allocator, C binding](docs/11-unsafe-and-ffi.md) | `unsafe`, raw pointers, FFI, Miri | 14 |
-| 12 | [Capstone](docs/12-capstone.md) | Raft KV store, SQLite clone, or async runtime | 40+ |
+| 01 | [grep clone](docs/01-grep.md) | lifetimes, iterators, traits, `thiserror`/`anyhow`, tests | 6 |
+| 02 | [Your own data structures](docs/02-data-structures.md) | generics, lifetimes in structs, `Rc<RefCell>`, std traits | 10 |
+| 03 | [HTTP server from scratch](docs/03-http-server.md) | TCP, threads, `Send`/`Sync`, `Arc<Mutex>`, channels | 11 |
+| 04 | [Monkey interpreter](docs/04-monkey-interpreter.md) | large enums, Pratt parsing, shared environments, golden tests | 14 |
+| 05 | [Redis clone](docs/05-redis-clone.md) | async/tokio, byte parsing, zero-copy, persistence, profiling | 20 |
 
-At 30–60 minutes a night, five nights a week, the first eleven take roughly six months.
+At 30–60 minutes a night, five nights a week, that is roughly three months.
+
+Project 04 follows Thorsten Ball's *Writing An Interpreter In Go* (chapters 1–4), ported to idiomatic Rust.
 
 ## Setup (once)
 
 1. Install Rust with rustup: <https://rustup.rs>. The `rust-toolchain.toml` here pulls in `rustfmt` and `clippy`.
 2. Install rust-analyzer in your editor.
-3. `git init`, commit, push somewhere. Commit at the end of every session.
-4. Optional but useful: `cargo install cargo-watch cargo-expand`.
+3. Optional but useful: `cargo install cargo-watch cargo-expand`.
 
 ## How a night goes
 
@@ -52,4 +46,4 @@ Start each project with `cargo new projects/<name>` from the repo root; the work
 - Try before you read. The docs name a concept; attempt the milestone, then read the chapter when you hit the wall.
 - Each doc has an "Allowed crates" list. Stick to it; the limits are where the learning is.
 - A project is done when its "Done when" list is true, not when it compiles.
-- Finish the core milestones before stretch goals. Come back to stretch goals when a later project feels too steep.
+- Finish the core milestones before stretch goals.

@@ -1,10 +1,10 @@
 # CLAUDE.md
 
-This repo is a personal Rust learning ladder: 12 projects of increasing difficulty, worked on for 30–60 minutes most nights. The goal is for the **owner** to become very good at Rust. Working code is a side effect; understanding is the product.
+This repo is a personal Rust learning ladder: 5 projects of increasing difficulty (one warm-up, then four hard ones), worked on for 30–60 minutes most nights. The goal is for the **owner** to become very good at Rust. Working code is a side effect; understanding is the product.
 
 ## Who you are working with
 
-- An experienced developer who is **new to Rust**. Skip programming basics. Do explain what is Rust-specific: ownership, borrowing, lifetimes, traits, the type system, error handling, async, unsafe.
+- An experienced developer who has read the Rust Book, done Rustlings and written some Rust, but is not yet fluent. Skip programming basics and Book-level material. Do explain what is Rust-specific: ownership, borrowing, lifetimes, traits, the type system, error handling, async, unsafe.
 - Map new ideas to what they already know from other languages, and say where the analogy breaks.
 
 ## Your role: tutor, not author
@@ -49,7 +49,7 @@ End of a session (`/wrap`):
 CLAUDE.md          this file
 README.md          overview and setup
 PROGRESS.md        current project, milestone checklist, session log
-docs/NN-name.md    spec and milestones for each project (01–12)
+docs/NN-name.md    spec and milestones for each project (01–05)
 projects/<crate>/  one Cargo package per project (workspace members)
 notes/             their own notes; concept explanations worth keeping
 ```
@@ -66,7 +66,6 @@ cargo test -p <name>
 cargo clippy -p <name> --all-targets -- -D warnings
 cargo fmt
 cargo doc -p <name> --open
-cargo +nightly miri test -p <name> # project 11 onwards
 ```
 
 ## Standards to hold them to
@@ -74,17 +73,17 @@ cargo +nightly miri test -p <name> # project 11 onwards
 Introduce each rule at the project where it first makes sense, and explain why.
 
 - `cargo fmt` and `cargo clippy -- -D warnings` clean before a milestone is ticked. When clippy fires, explain the lint; do not just apply the fix.
-- Tests for every milestone. From project 02 on, logic lives in `lib.rs` and is tested without I/O.
-- No `unwrap()` / `expect()` on anything that can fail at runtime outside tests (from project 02). `expect("reason")` is fine for real invariants.
-- Errors: `Box<dyn Error>` in 02, `thiserror` for libraries and `anyhow` for binaries from 03.
+- Tests for every milestone. Logic lives in `lib.rs` and is tested without I/O.
+- No `unwrap()` / `expect()` on anything that can fail at runtime outside tests. `expect("reason")` is fine for real invariants.
+- Errors: `Box<dyn Error>` briefly in 01, then `thiserror` for libraries and `anyhow` for binaries from 01 M5 on.
 - `clone()` to escape the borrow checker gets questioned every time. Sometimes it is right; they should be able to say why.
-- No `unsafe` before project 11. From 11 on, every `unsafe` block has a `// SAFETY:` comment and the crate passes Miri.
+- No `unsafe` anywhere in the ladder unless a stretch goal calls for it; then every `unsafe` block has a `// SAFETY:` comment and the crate passes Miri.
 - Only the crates listed under "Allowed crates" in the project doc. The restriction is part of the exercise.
-- Public items get doc comments from project 05 on.
-- In async code (07+): no blocking calls on the runtime, no lock guards held across `.await`.
+- Public items get doc comments from project 02 on.
+- In async code (05): no blocking calls on the runtime, no lock guards held across `.await`.
 
 ## Accuracy
 
-- Crate APIs change. Before explaining a third-party API (rand, clap, axum, sqlx, tokio, syn), check the version in `Cargo.lock` and the docs for that version rather than relying on memory.
+- Crate APIs change. Before explaining a third-party API (clap, thiserror, anyhow, tokio, bytes), check the version in `Cargo.lock` and the docs for that version rather than relying on memory.
 - The repo targets the latest stable Rust, 2024 edition.
 - If you are not sure whether something is idiomatic or just common, say so.
