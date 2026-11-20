@@ -1,21 +1,20 @@
-# 02 · Your Own Data Structures and Algorithms
+# 02 · Your Own Data Structures
 
-> Level 2 of 5 · about 38 nights · crates: `projects/structures` (library), then `projects/algos` (library, Part 4)
+> Level 2 of 5 · about 28 nights · crate: `projects/structures` (library)
 
 ## Why this project
 
 Linked structures are easy in garbage-collected languages and famously awkward in Rust, which makes them the best place to really learn ownership, generics, lifetimes and the smart pointers. In real code you would use `Vec`, `VecDeque`, `HashMap`, `BTreeMap` and `BinaryHeap`. This is the gym.
 
-It is also the interview kit. Every structure and algorithm on the standard "you should know these" list is in here, and the speed drills at the end train you to write each one from a blank file, quickly and without looking anything up.
+It is also the interview kit for data structures. Every structure on the standard "you should know these" list is in here, and the speed drills at the end train you to write each one from a blank file, quickly and without looking anything up. Algorithms practice lives in a separate repo.
 
-The project has four parts. Do them in order: each part uses what the earlier parts built.
+The project has three parts. Do them in order: each part uses what the earlier parts built.
 
 | Part | Covers | Milestones | Nights |
 |------|--------|------------|--------|
 | 1 · Linear | stack, arrays, matrix, linked lists (singly, doubly, circular), queues (linear, circular, double-ended) | M1–M10 | ~12 |
 | 2 · Hashing and trees | hash map and set, LRU cache, binary tree, N-ary tree, BST, AVL, red-black, heap and priority queue | M11–M19 | ~12 |
-| 3 · Graphs and friends | trie, union-find, graphs (directed/undirected, weighted/unweighted, adjacency list/matrix) | M20–M22 | ~4 |
-| 4 · Algorithms | sorting, binary search, two pointers, sliding window, frequency counting, BFS/DFS, backtracking, greedy, heap algorithms | M23–M30 | ~10 |
+| 3 · Graphs and friends | trie, union-find, graphs (directed/undirected, weighted/unweighted, adjacency list/matrix) | M20–M23 | ~4 |
 
 ## Rust concepts
 
@@ -29,20 +28,17 @@ The project has four parts. Do them in order: each part uses what the earlier pa
 - Reference cycles and leaks
 - Using indices into a `Vec` instead of pointers (the arena pattern)
 - `Hash`, `Hasher`, `BuildHasher`; `Eq` and `Ord` and what they promise
-- Closures as parameters: `Fn`, `FnMut`, `FnOnce`; `_by` and `_by_key` APIs
-- Slices: `split_at_mut`, `swap`, `windows`, `chunks`, recursion on sub-slices
 - Associated types, `impl Trait` in return position, marker types with `PhantomData`
-- Workspace path dependencies between two of your own crates
 - Doc comments, doctests, `cargo doc`
 - Property testing and benchmarking
 
 ## Dev skills
 
-Classic data structures and algorithms, API design that mirrors the standard library, testing against an oracle, invariant checkers, measuring instead of guessing, and writing all of it fast from memory.
+Classic data structures, API design that mirrors the standard library, testing against an oracle, invariant checkers, measuring instead of guessing, and writing all of it fast from memory.
 
 ## Allowed crates
 
-None in either library. Dev: `proptest`, `criterion`. No `unsafe` (not part of this ladder). Where a milestone builds on an earlier one, use your own structure, not the std one, unless the milestone says otherwise.
+None in the library. Dev: `proptest`, `criterion`. No `unsafe` (not part of this ladder). Where a milestone builds on an earlier one, use your own structure, not the std one, unless the milestone says otherwise.
 
 ## Spec
 
@@ -75,10 +71,6 @@ Everything is generic, documented, and has iterators where it makes sense. Each 
 17. **`UnionFind`**: over `0..n`. `find` with path compression, `union` by rank or size, `connected`, `set_count`, `set_size`. Then a version keyed by any hashable type.
 18. **Graphs**: one trait that algorithms are written against, with two implementations, adjacency list and adjacency matrix. Both support directed and undirected, weighted and unweighted graphs, chosen at the type level rather than by a runtime flag. `add_vertex`, `add_edge`, `neighbors`, `has_edge`, `vertex_count`, `edge_count`.
 
-### Part 4 · Algorithms
-
-A second crate, `projects/algos`, depending on `structures` by path. Each algorithm gets a function, tests, and where relevant a proptest against a brute-force or std oracle. Problem statements below are deliberately short; the input and output types are your design.
-
 ## Milestones
 
 ### Part 1 · Linear
@@ -88,7 +80,7 @@ A second crate, `projects/algos`, depending on `structures` by path. Each algori
 - [ ] **M3 · Iterators.** `IntoIter`, `Iter<'a, T>`, `IterMut<'a, T>`, plus `IntoIterator` for `Stack<T>`, `&Stack<T>` and `&mut Stack<T>`. This is the lifetime night; expect it to take two.
 - [ ] **M4 · Standard traits and docs.** `FromIterator`, `Extend`, `Debug`. A doc comment with a runnable example on every public item. `cargo doc --open`.
 - [ ] **M5 · Fixed array.** `FixedArray<T, N>` to spec. No `T: Default` or `T: Copy` bound allowed. Compare its `size_of` with a `Vec<T>` and explain the difference.
-- [ ] **M6 · Matrix.** `Matrix<T>` to spec. Multiplication only exists when `T` supports it; write the bounds yourself. The neighbors iterator gets reused in Part 4, so make it pleasant to call.
+- [ ] **M6 · Matrix.** `Matrix<T>` to spec. Multiplication only exists when `T` supports it; write the bounds yourself.
 - [ ] **M7 · Deque with `Rc<RefCell>`.** Push and pop at both ends. Watch `Rc::strong_count`. Cause a `BorrowMutError` panic on purpose to see what moved from compile time to run time.
 - [ ] **M8 · Cycles.** Write a test that would leak if the back links were `Rc` instead of `Weak`, and convince yourself why.
 - [ ] **M9 · Circular list.** `CircularList<T>` to spec, no leaks (prove it with a test like M8's). Write two sentences in `notes/` on why you chose your representation.
@@ -112,16 +104,7 @@ A second crate, `projects/algos`, depending on `structures` by path. Each algori
 - [ ] **M21 · Union-find.** Both versions to spec. Count how many parent hops `find` takes with and without path compression on a worst-case input.
 - [ ] **M22 · Graphs.** The trait and both representations, covering all four directed/weighted combinations. Make an invalid combination (a weighted edge on an unweighted graph) a compile error, not a panic.
 
-### Part 4 · Algorithms (`projects/algos`)
-
-- [ ] **M23 · Sorting.** Merge sort, quicksort and heap sort, each generic over `T: Ord` with a `_by` variant taking a comparator. Quicksort and heap sort are in place. Proptest each against `slice::sort`; benchmark all three against it on random, sorted and all-equal input. Then two problems where sorting first makes it easy: *merge overlapping intervals*; *are any two of these meetings overlapping*.
-- [ ] **M24 · Binary search.** Your own `binary_search` (same `Ok`/`Err` contract as std), `lower_bound`, `upper_bound`, `partition_point`. Binary search on the answer: *integer square root*; *minimum eating speed to finish all piles within h hours*; *split an array into k parts minimising the largest part's sum*.
-- [ ] **M25 · Two pointers and sliding window.** Two pointers: *pair with target sum in a sorted array*; *remove duplicates from a sorted vec in place*; *container with most water*; *all unique triples summing to zero*. Sliding window: *max average of any k-length window*; *longest substring without repeating characters*; *smallest window of s containing all characters of t*; *maximum of every k-length window in O(n)* (use your `Deque`).
-- [ ] **M26 · Hashing and frequency counting.** Using your `HashMap` and `HashSet`: *two sum*; *group anagrams*; *first non-repeating character*; *longest consecutive sequence in O(n)*; *count subarrays summing to k*; *top k frequent elements* (with your heap).
-- [ ] **M27 · BFS and DFS.** On your graph and matrix: BFS shortest path with path reconstruction; *number of islands*, DFS recursive and iterative; connected components (check against union-find); bipartite check; topological sort both ways (queue of in-degrees, and DFS) with cycle detection; *rotting oranges* (multi-source BFS); Dijkstra with your priority queue. Add a section to `notes/` on when you reach for BFS and when for DFS.
-- [ ] **M28 · Backtracking.** *All permutations*; *all subsets*; *combinations summing to a target*; *N-queens*; *word search in a grid* (your `Matrix`); *find all dictionary words in a grid* (with your `Trie`).
-- [ ] **M29 · Greedy and heap algorithms.** Greedy: *max number of non-overlapping intervals*; *minimum arrows to burst balloons*; *jump game*; minimum spanning tree with Kruskal (your union-find). Heap: *kth largest element*; *minimum meeting rooms*; *task scheduler with cooldown*; merge k sorted iterators into one sorted iterator, generic over the iterator type.
-- [ ] **M30 · Prove it.** Proptests running random operation sequences against `Vec`, `VecDeque`, `HashMap`, `BTreeMap` and `BinaryHeap` as oracles for every structure that has a std equivalent. A `criterion` benchmark of each against its std equivalent.
+- [ ] **M23 · Prove it.** Proptests running random operation sequences against `Vec`, `VecDeque`, `HashMap`, `BTreeMap` and `BinaryHeap` as oracles for every structure that has a std equivalent. A `criterion` benchmark of each against its std equivalent.
 
 ## Speed drills
 
@@ -137,12 +120,10 @@ Targets to work toward:
 | Union-find with path compression and rank | 5 min |
 | Trie (insert/contains/starts_with) | 8 min |
 | BST insert/get/in-order | 10 min |
-| Graph from edge list + BFS shortest path | 10 min |
-| Grid DFS/BFS (islands) | 8 min |
-| Merge sort and quicksort | 10 min |
-| Binary search on the answer | 5 min |
-| Sliding window (variable size) | 8 min |
-| Backtracking (permutations / subsets) | 5 min |
+| Hash map with chaining (insert/get/resize) | 12 min |
+| LRU cache | 12 min |
+| Graph as adjacency list from an edge list | 5 min |
+| Matrix with bounds-checked neighbors | 5 min |
 
 ## Traps when coming from other languages
 
@@ -157,7 +138,7 @@ Targets to work toward:
 ## Done when
 
 - [ ] Every structure meets the spec, with doctests on every public method.
-- [ ] Every Part 4 problem has tests, and property tests pass against the std oracles.
+- [ ] Property tests pass against the std oracles.
 - [ ] No `unsafe` anywhere.
 - [ ] You can explain each of `as_ref`, `as_mut`, `as_deref` and `take` on an `Option<Box<T>>`.
 - [ ] You can explain what `'a` ties together in `Iter<'a, T>`.
@@ -165,7 +146,7 @@ Targets to work toward:
 - [ ] You can state the time and space complexity of every operation you wrote, and point to the line that makes it so.
 - [ ] You have benchmark numbers and can explain why `Vec` beats your linked list.
 - [ ] You can explain why AVL and red-black trees stay O(log n) and which one you'd pick for read-heavy vs write-heavy work.
-- [ ] Given a new problem, you can say in under a minute which structure and which technique you'd reach for, and why.
+- [ ] Given a new problem, you can say in under a minute which structure you'd reach for, and why.
 - [ ] You have hit the speed-drill targets at least once each.
 
 ## Stretch
@@ -176,15 +157,14 @@ Targets to work toward:
 - A persistent (immutable, structure-sharing) stack with `Rc`.
 - A skip list.
 - A segment tree or Fenwick tree for range-sum queries.
-- 0/1 BFS and A* on a weighted grid.
-- Kosaraju or Tarjan for strongly connected components.
+- A B-tree.
 
 ## Reading
 
 - Learn Rust With Entirely Too Many Linked Lists, the safe chapters only. Stop when it reaches `unsafe`: <https://rust-unofficial.github.io/too-many-lists/>
-- The Rust Book: ch. 10 (Generics, Traits, Lifetimes), ch. 13 (Closures and Iterators), ch. 15 (Smart Pointers)
+- The Rust Book: ch. 10 (Generics, Traits, Lifetimes), ch. 15 (Smart Pointers)
 - The `std::option::Option` docs page, top to bottom
 - The `std::collections` module docs, the "when should you use which collection" section: <https://doc.rust-lang.org/std/collections/index.html>
 - The `std::hash` module docs, before M11
-- Sedgewick and Wayne, *Algorithms* (4th ed.), ch. 3.3 for balanced trees (including left-leaning red-black) and ch. 4 for graphs. Read after you've attempted the milestone.
+- Sedgewick and Wayne, *Algorithms* (4th ed.), ch. 3.3 for balanced trees (including left-leaning red-black) and ch. 4.1–4.2 for graph representations. Read after you've attempted the milestone.
 - After finishing a structure, not before: read the std source for its equivalent (`BinaryHeap`, `VecDeque`; `HashMap` is a wrapper over the `hashbrown` crate) and compare.
