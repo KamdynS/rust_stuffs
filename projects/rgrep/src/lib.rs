@@ -1,7 +1,7 @@
-pub fn search<'a>(input: &'a str, matching_string: &str) -> Vec<&'a str> {
+pub fn search<'a>(input: &'a str, pattern: &str) -> Vec<&'a str> {
     let mut out = Vec::new();
     for line in input.lines() {
-        if line.contains(matching_string) {
+        if line.contains(pattern) {
             out.push(line)
         }
     }
