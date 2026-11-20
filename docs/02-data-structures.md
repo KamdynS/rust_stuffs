@@ -104,6 +104,8 @@ Everything is generic, documented, and has iterators where it makes sense. Each 
 - [ ] **M21 · Union-find.** Both versions to spec. Count how many parent hops `find` takes with and without path compression on a worst-case input.
 - [ ] **M22 · Graphs.** The trait and both representations, covering all four directed/weighted combinations. Make an invalid combination (a weighted edge on an unweighted graph) a compile error, not a panic.
 
+### Wrap-up
+
 - [ ] **M23 · Prove it.** Proptests running random operation sequences against `Vec`, `VecDeque`, `HashMap`, `BTreeMap` and `BinaryHeap` as oracles for every structure that has a std equivalent. A `criterion` benchmark of each against its std equivalent.
 
 ## Speed drills
