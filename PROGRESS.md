@@ -8,7 +8,7 @@
 | #  | Project | Status | Started | Finished |
 |----|---------|--------|---------|----------|
 | 01 | grep clone | in progress (M1 done) | 2026-11-18 | |
-| 02 | Your own data structures | not started | | |
+| 02 | Your own data structures and algorithms | not started | | |
 | 03 | HTTP server from scratch | not started | | |
 | 04 | Monkey interpreter | not started | | |
 | 05 | Redis clone | not started | | |
@@ -26,6 +26,7 @@ Add a line when a concept clicks. If you cannot explain it to someone else, it d
 
 Newest first. One line per night: date, what was done, what was learned, exact next step.
 
+- **2026-11-20** · Expanded project 02 from 4 structures / 10 milestones to the full interview list: arrays, matrix, singly/doubly/circular lists, stack, linear/circular/double-ended/priority queues, hash map, binary/N-ary/BST/AVL/red-black trees, heap, trie, union-find, graphs, plus an `algos` crate for sorting, binary search, two pointers, sliding window, hashing, BFS/DFS, backtracking, greedy and heap algorithms. 30 milestones, ~38 nights, weekly speed drills. Next: unchanged, finish 01 first.
 - **2026-11-18 (late)** · Done: 01 M1. Created `projects/rgrep`; `search(input: &'a str, matching_string: &str) -> Vec<&'a str>` with 3 unit tests; empty query matches every line, like grep. Went from returning one concatenated `String` to returning `Vec<&str>` borrowed from the input. Learned: `String` vs `&str` (owned buffer vs view); the lifetime goes only on the input the output borrows from, so the caller can drop the query early; `Vec<T>` is a type, `vec![]` is a value; `vec![]` needs a type annotation in `assert_eq!` because `Vec`'s `PartialEq` is generic; compiler `help:` suggestions can lead you down the wrong path. Also wrote `notes/how-to-toil.md`. Next: start M2 (see top).
 - **2026-11-18** · Restructured the ladder from 12 projects to 5: grep (extended warm-up), data structures, HTTP server, Monkey interpreter (Ball, ch. 1–4), Redis clone with an async on-ramp. Dropped the guessing game as too easy and deleted `projects/guess`. Next: start 01 M1.
 - **2026-11-11** · Done: M2. Added `rand` 0.10.3; game loops until correct using `cmp` + `match` on `Ordering`; bad input doesn't panic (silently retries). Code closely follows Book ch. 2. Learned: rand 0.10 API (`rand::rng()`, `random_range`, trait `RngExt`). Open questions carried over: `u32` inference of `secret_number`; trait-in-scope for `random_range`. Next: answer those, then M3, then M4.

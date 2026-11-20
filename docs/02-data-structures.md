@@ -1,53 +1,148 @@
-# 02 · Your Own Data Structures
+# 02 · Your Own Data Structures and Algorithms
 
-> Level 2 of 5 · about 10 nights · crate: `projects/structures` (library)
+> Level 2 of 5 · about 38 nights · crates: `projects/structures` (library), then `projects/algos` (library, Part 4)
 
 ## Why this project
 
-Linked structures are easy in garbage-collected languages and famously awkward in Rust, which makes them the best place to really learn ownership, generics, lifetimes and the smart pointers. In real code you would use `Vec`, `VecDeque` or `BTreeMap`. This is the gym.
+Linked structures are easy in garbage-collected languages and famously awkward in Rust, which makes them the best place to really learn ownership, generics, lifetimes and the smart pointers. In real code you would use `Vec`, `VecDeque`, `HashMap`, `BTreeMap` and `BinaryHeap`. This is the gym.
+
+It is also the interview kit. Every structure and algorithm on the standard "you should know these" list is in here, and the speed drills at the end train you to write each one from a blank file, quickly and without looking anything up.
+
+The project has four parts. Do them in order: each part uses what the earlier parts built.
+
+| Part | Covers | Milestones | Nights |
+|------|--------|------------|--------|
+| 1 · Linear | stack, arrays, matrix, linked lists (singly, doubly, circular), queues (linear, circular, double-ended) | M1–M10 | ~12 |
+| 2 · Hashing and trees | hash map and set, LRU cache, binary tree, N-ary tree, BST, AVL, red-black, heap and priority queue | M11–M19 | ~12 |
+| 3 · Graphs and friends | trie, union-find, graphs (directed/undirected, weighted/unweighted, adjacency list/matrix) | M20–M22 | ~4 |
+| 4 · Algorithms | sorting, binary search, two pointers, sliding window, frequency counting, BFS/DFS, backtracking, greedy, heap algorithms | M23–M30 | ~10 |
 
 ## Rust concepts
 
 - Generics, trait bounds, `where` clauses
 - `Option<Box<Node<T>>>` and its toolkit: `take`, `as_ref`, `as_mut`, `as_deref`, `map`
-- `std::mem::replace` / `take`
+- `std::mem::replace` / `take` / `swap`
 - Lifetimes in structs: writing `Iter<'a, T>` and `IterMut<'a, T>`
-- Implementing standard traits: `Iterator`, `IntoIterator` (three ways), `FromIterator`, `Extend`, `Default`, `Debug`, `Drop`
+- Implementing standard traits: `Iterator`, `IntoIterator` (three ways), `FromIterator`, `Extend`, `Default`, `Debug`, `Drop`, `Index`, `IndexMut`, `PartialEq`
+- Const generics and arrays: `[T; N]`, `std::array::from_fn`
 - `Rc`, `Weak`, `RefCell`: shared ownership and interior mutability
 - Reference cycles and leaks
 - Using indices into a `Vec` instead of pointers (the arena pattern)
+- `Hash`, `Hasher`, `BuildHasher`; `Eq` and `Ord` and what they promise
+- Closures as parameters: `Fn`, `FnMut`, `FnOnce`; `_by` and `_by_key` APIs
+- Slices: `split_at_mut`, `swap`, `windows`, `chunks`, recursion on sub-slices
+- Associated types, `impl Trait` in return position, marker types with `PhantomData`
+- Workspace path dependencies between two of your own crates
 - Doc comments, doctests, `cargo doc`
 - Property testing and benchmarking
 
 ## Dev skills
 
-Classic data structures, API design that mirrors the standard library, testing against an oracle, measuring instead of guessing.
+Classic data structures and algorithms, API design that mirrors the standard library, testing against an oracle, invariant checkers, measuring instead of guessing, and writing all of it fast from memory.
 
 ## Allowed crates
 
-None in the library. Dev: `proptest`, `criterion`. No `unsafe` (not part of this ladder).
+None in either library. Dev: `proptest`, `criterion`. No `unsafe` (not part of this ladder). Where a milestone builds on an earlier one, use your own structure, not the std one, unless the milestone says otherwise.
 
 ## Spec
 
-Four types, all generic, all documented, all with iterators where it makes sense.
+Everything is generic, documented, and has iterators where it makes sense. Each structure goes in its own module of `projects/structures`.
+
+### Part 1 · Linear
 
 1. **`Stack<T>`**: singly linked. `push`, `pop`, `peek`, `peek_mut`, `len`, `is_empty`, `reverse`. `iter`, `iter_mut`, `into_iter`. Dropping a million-element stack must not overflow the call stack.
-2. **`Bst<K, V>`**: unbalanced binary search tree map. `insert`, `get`, `get_mut`, `contains_key`, `remove`, `len`, in-order `iter`.
-3. **`Deque<T>`**: doubly linked with `Rc<RefCell<...>>` forward links and `Weak` back links. `push_front`, `push_back`, `pop_front`, `pop_back`, `len`.
-4. **`LruCache<K, V>`**: fixed capacity; `get` and `put` in O(1); evicts the least recently used entry. Built from a `HashMap` plus a linked list stored as indices in a `Vec`.
+2. **`FixedArray<T, const N: usize>`**: capacity fixed at compile time, no heap allocation. `push`, `pop`, `get`, `insert`, `remove` (shifting), `len`, `capacity`, `iter`. Operations that would exceed capacity return an error instead of panicking. `Index` / `IndexMut`.
+3. **`Matrix<T>`**: rows × cols in one flat `Vec`. Construct filled or from nested rows (rejecting ragged input). `Index<(usize, usize)>`, checked `get`, `row`, `col`, `transpose`, iterator over 4- and 8-direction in-bounds neighbors of a cell, and multiplication for numeric `T`.
+4. **`Deque<T>`**: doubly linked with `Rc<RefCell<...>>` forward links and `Weak` back links. `push_front`, `push_back`, `pop_front`, `pop_back`, `peek_front`, `peek_back`, `len`.
+5. **`CircularList<T>`**: singly linked, last node points back to the first. `push_front`, `push_back`, `pop_front`, `rotate` (move the head forward by k), `len`, and an `iter` that visits each element once and stops. Pick the representation yourself.
+6. **`Queue<T>`**: unbounded FIFO. `enqueue`, `dequeue`, `peek`, `len`. Amortised O(1).
+7. **`RingQueue<T>`**: circular queue on fixed capacity. `enqueue` fails when full, `dequeue`, `peek`, `is_full`. Then a growable version that doubles when full and keeps FIFO order.
+
+### Part 2 · Hashing and trees
+
+8. **`HashMap<K, V>`** with `K: Hash + Eq`: `insert` (returns the old value), `get`, `get_mut`, `remove`, `contains_key`, `len`, `iter`. Grows when the load factor passes a threshold you choose. Pick separate chaining or open addressing. **`HashSet<T>`** on top of it.
+9. **`LruCache<K, V>`**: fixed capacity; `get` and `put` in O(1); evicts the least recently used entry. Your `HashMap` plus a linked list stored as indices in a `Vec`.
+10. **`BinaryTree<T>`** (unordered): build from LeetCode-style level order (`Vec<Option<T>>`), pre-, in- and post-order traversal both recursive and iterative, level-order traversal (grouped by level), `height`, `mirror`, lowest common ancestor.
+11. **`NaryTree<T>`**: any number of children. `depth`, pre-order and level-order traversal, find by path, serialize to a string and parse it back.
+12. **`Bst<K, V>`**: unbalanced binary search tree map. `insert`, `get`, `get_mut`, `contains_key`, `remove`, `len`, in-order `iter`, `min`, `max`, `floor`, `ceiling`, and a `range` iterator.
+13. **`AvlTree<K, V>`**: same API as `Bst`, height-balanced after every insert and remove.
+14. **`RedBlackTree<K, V>`**: `insert`, `get`, `len`, `iter`. Classic or left-leaning variant, your choice; write down why in `notes/`.
+15. **`BinaryHeap<T: Ord>`** on a `Vec`: `push`, `pop`, `peek`, `len`, `from(Vec<T>)` in O(n), `into_sorted_vec`. Usable as a min-heap too. **`PriorityQueue`** on top: items with separate priorities, plus `change_priority`.
+
+### Part 3 · Graphs and friends
+
+16. **`Trie`**: `insert`, `contains`, `starts_with`, `remove`, and an iterator over all words with a given prefix, in sorted order.
+17. **`UnionFind`**: over `0..n`. `find` with path compression, `union` by rank or size, `connected`, `set_count`, `set_size`. Then a version keyed by any hashable type.
+18. **Graphs**: one trait that algorithms are written against, with two implementations, adjacency list and adjacency matrix. Both support directed and undirected, weighted and unweighted graphs, chosen at the type level rather than by a runtime flag. `add_vertex`, `add_edge`, `neighbors`, `has_edge`, `vertex_count`, `edge_count`.
+
+### Part 4 · Algorithms
+
+A second crate, `projects/algos`, depending on `structures` by path. Each algorithm gets a function, tests, and where relevant a proptest against a brute-force or std oracle. Problem statements below are deliberately short; the input and output types are your design.
 
 ## Milestones
+
+### Part 1 · Linear
 
 - [ ] **M1 · Stack basics.** `push` and `pop` for a concrete `i32` stack. You will fight the borrow checker until you find `Option::take`.
 - [ ] **M2 · Generic and droppable.** Make it `Stack<T>`. Add `peek`, `peek_mut`, `Default`. Write an iterative `Drop` and a test that drops a huge stack.
 - [ ] **M3 · Iterators.** `IntoIter`, `Iter<'a, T>`, `IterMut<'a, T>`, plus `IntoIterator` for `Stack<T>`, `&Stack<T>` and `&mut Stack<T>`. This is the lifetime night; expect it to take two.
 - [ ] **M4 · Standard traits and docs.** `FromIterator`, `Extend`, `Debug`. A doc comment with a runnable example on every public item. `cargo doc --open`.
-- [ ] **M5 · BST insert and lookup.** `K: Ord`. Insert, get, contains, len.
-- [ ] **M6 · BST iteration and removal.** In-order iterator using an explicit stack. `remove`, handling all three cases.
+- [ ] **M5 · Fixed array.** `FixedArray<T, N>` to spec. No `T: Default` or `T: Copy` bound allowed. Compare its `size_of` with a `Vec<T>` and explain the difference.
+- [ ] **M6 · Matrix.** `Matrix<T>` to spec. Multiplication only exists when `T` supports it; write the bounds yourself. The neighbors iterator gets reused in Part 4, so make it pleasant to call.
 - [ ] **M7 · Deque with `Rc<RefCell>`.** Push and pop at both ends. Watch `Rc::strong_count`. Cause a `BorrowMutError` panic on purpose to see what moved from compile time to run time.
 - [ ] **M8 · Cycles.** Write a test that would leak if the back links were `Rc` instead of `Weak`, and convince yourself why.
-- [ ] **M9 · LRU cache.** Entries in a `Vec`, `prev`/`next` as indices, a `HashMap` from key to index, a free list for reuse.
-- [ ] **M10 · Prove it.** Property tests that run random operation sequences against `Vec`, `BTreeMap` and `VecDeque` as oracles. A `criterion` benchmark of each structure against its std equivalent.
+- [ ] **M9 · Circular list.** `CircularList<T>` to spec, no leaks (prove it with a test like M8's). Write two sentences in `notes/` on why you chose your representation.
+- [ ] **M10 · Queues.** `Queue<T>`, then `RingQueue<T>` fixed and growable. Proptest all three queues and the deque against `VecDeque`.
+
+### Part 2 · Hashing and trees
+
+- [ ] **M11 · Hash map.** `HashMap<K, V>` and `HashSet<T>` to spec, using std's hasher machinery but none of std's maps. Test with a key type whose hash always collides and make sure it still works.
+- [ ] **M12 · LRU cache.** Entries in a `Vec`, `prev`/`next` as indices, your `HashMap` from key to index, a free list for reuse.
+- [ ] **M13 · Binary tree.** `BinaryTree<T>` to spec. Write every traversal twice, recursive and iterative (use your own `Stack` and `Queue`).
+- [ ] **M14 · N-ary tree.** `NaryTree<T>` to spec. The round trip `parse(serialize(t)) == t` is a proptest.
+- [ ] **M15 · BST insert and lookup.** `K: Ord`. Insert, get, contains, len, min, max.
+- [ ] **M16 · BST iteration and removal.** In-order iterator using an explicit stack. `remove`, handling all three cases. `floor`, `ceiling`, `range`.
+- [ ] **M17 · AVL tree.** Insert and remove with rotations. Write an invariant checker (ordering, balance factor, stored heights) and run it after every operation in a proptest. Measure the height after inserting 1..=100_000 in order into both `Bst` and `AvlTree`.
+- [ ] **M18 · Red-black tree.** Insert and lookup. An invariant checker for all the red-black rules, run in a proptest. Removal is a stretch goal.
+- [ ] **M19 · Heap and priority queue.** `BinaryHeap<T>` and `PriorityQueue` to spec. Show the O(n) build is really faster than n pushes with a benchmark.
+
+### Part 3 · Graphs and friends
+
+- [ ] **M20 · Trie.** To spec. Build it with two child representations (one sparse, one fixed-size), benchmark both on a real word list, and keep the one you would defend.
+- [ ] **M21 · Union-find.** Both versions to spec. Count how many parent hops `find` takes with and without path compression on a worst-case input.
+- [ ] **M22 · Graphs.** The trait and both representations, covering all four directed/weighted combinations. Make an invalid combination (a weighted edge on an unweighted graph) a compile error, not a panic.
+
+### Part 4 · Algorithms (`projects/algos`)
+
+- [ ] **M23 · Sorting.** Merge sort, quicksort and heap sort, each generic over `T: Ord` with a `_by` variant taking a comparator. Quicksort and heap sort are in place. Proptest each against `slice::sort`; benchmark all three against it on random, sorted and all-equal input. Then two problems where sorting first makes it easy: *merge overlapping intervals*; *are any two of these meetings overlapping*.
+- [ ] **M24 · Binary search.** Your own `binary_search` (same `Ok`/`Err` contract as std), `lower_bound`, `upper_bound`, `partition_point`. Binary search on the answer: *integer square root*; *minimum eating speed to finish all piles within h hours*; *split an array into k parts minimising the largest part's sum*.
+- [ ] **M25 · Two pointers and sliding window.** Two pointers: *pair with target sum in a sorted array*; *remove duplicates from a sorted vec in place*; *container with most water*; *all unique triples summing to zero*. Sliding window: *max average of any k-length window*; *longest substring without repeating characters*; *smallest window of s containing all characters of t*; *maximum of every k-length window in O(n)* (use your `Deque`).
+- [ ] **M26 · Hashing and frequency counting.** Using your `HashMap` and `HashSet`: *two sum*; *group anagrams*; *first non-repeating character*; *longest consecutive sequence in O(n)*; *count subarrays summing to k*; *top k frequent elements* (with your heap).
+- [ ] **M27 · BFS and DFS.** On your graph and matrix: BFS shortest path with path reconstruction; *number of islands*, DFS recursive and iterative; connected components (check against union-find); bipartite check; topological sort both ways (queue of in-degrees, and DFS) with cycle detection; *rotting oranges* (multi-source BFS); Dijkstra with your priority queue. Add a section to `notes/` on when you reach for BFS and when for DFS.
+- [ ] **M28 · Backtracking.** *All permutations*; *all subsets*; *combinations summing to a target*; *N-queens*; *word search in a grid* (your `Matrix`); *find all dictionary words in a grid* (with your `Trie`).
+- [ ] **M29 · Greedy and heap algorithms.** Greedy: *max number of non-overlapping intervals*; *minimum arrows to burst balloons*; *jump game*; minimum spanning tree with Kruskal (your union-find). Heap: *kth largest element*; *minimum meeting rooms*; *task scheduler with cooldown*; merge k sorted iterators into one sorted iterator, generic over the iterator type.
+- [ ] **M30 · Prove it.** Proptests running random operation sequences against `Vec`, `VecDeque`, `HashMap`, `BTreeMap` and `BinaryHeap` as oracles for every structure that has a std equivalent. A `criterion` benchmark of each against its std equivalent.
+
+## Speed drills
+
+The list this project is built from says you should be able to create these *very quickly*. Once a structure's milestone is done, add it to the drill rotation: once a week, in a scratch file outside the workspace, write it from an empty file with a timer running, no docs, no autocomplete beyond rust-analyzer's errors, until its tests pass. Log the time in `PROGRESS.md`.
+
+Targets to work toward:
+
+| Drill | Target |
+|-------|--------|
+| Stack (push/pop/peek, `Option<Box>`) | 5 min |
+| Ring queue | 8 min |
+| Binary heap (push/pop/sift) | 10 min |
+| Union-find with path compression and rank | 5 min |
+| Trie (insert/contains/starts_with) | 8 min |
+| BST insert/get/in-order | 10 min |
+| Graph from edge list + BFS shortest path | 10 min |
+| Grid DFS/BFS (islands) | 8 min |
+| Merge sort and quicksort | 10 min |
+| Binary search on the answer | 5 min |
+| Sliding window (variable size) | 8 min |
+| Backtracking (permutations / subsets) | 5 min |
 
 ## Traps when coming from other languages
 
@@ -61,23 +156,35 @@ Four types, all generic, all documented, all with iterators where it makes sense
 
 ## Done when
 
-- [ ] All four types meet the spec, with doctests on every public method.
-- [ ] Property tests pass against the std oracles.
+- [ ] Every structure meets the spec, with doctests on every public method.
+- [ ] Every Part 4 problem has tests, and property tests pass against the std oracles.
 - [ ] No `unsafe` anywhere.
 - [ ] You can explain each of `as_ref`, `as_mut`, `as_deref` and `take` on an `Option<Box<T>>`.
 - [ ] You can explain what `'a` ties together in `Iter<'a, T>`.
 - [ ] You can say when `Rc<RefCell<T>>` is the right tool and when indices are better.
+- [ ] You can state the time and space complexity of every operation you wrote, and point to the line that makes it so.
 - [ ] You have benchmark numbers and can explain why `Vec` beats your linked list.
+- [ ] You can explain why AVL and red-black trees stay O(log n) and which one you'd pick for read-heavy vs write-heavy work.
+- [ ] Given a new problem, you can say in under a minute which structure and which technique you'd reach for, and why.
+- [ ] You have hit the speed-drill targets at least once each.
 
 ## Stretch
 
-- Balance the tree (AVL or red-black).
-- A trie with prefix iteration.
-- A binary heap and a priority queue on top of it.
+- Red-black tree removal.
+- Robin Hood hashing, or the open-addressing/chaining variant you didn't pick in M11, benchmarked against the first.
+- An `entry` API for your `HashMap`.
 - A persistent (immutable, structure-sharing) stack with `Rc`.
+- A skip list.
+- A segment tree or Fenwick tree for range-sum queries.
+- 0/1 BFS and A* on a weighted grid.
+- Kosaraju or Tarjan for strongly connected components.
 
 ## Reading
 
 - Learn Rust With Entirely Too Many Linked Lists, the safe chapters only. Stop when it reaches `unsafe`: <https://rust-unofficial.github.io/too-many-lists/>
-- The Rust Book: ch. 10 (Generics, Traits, Lifetimes), ch. 15 (Smart Pointers)
+- The Rust Book: ch. 10 (Generics, Traits, Lifetimes), ch. 13 (Closures and Iterators), ch. 15 (Smart Pointers)
 - The `std::option::Option` docs page, top to bottom
+- The `std::collections` module docs, the "when should you use which collection" section: <https://doc.rust-lang.org/std/collections/index.html>
+- The `std::hash` module docs, before M11
+- Sedgewick and Wayne, *Algorithms* (4th ed.), ch. 3.3 for balanced trees (including left-leaning red-black) and ch. 4 for graphs. Read after you've attempted the milestone.
+- After finishing a structure, not before: read the std source for its equivalent (`BinaryHeap`, `VecDeque`; `HashMap` is a wrapper over the `hashbrown` crate) and compare.
