@@ -1,18 +1,18 @@
 # Rust Ladder
 
-Five projects, worked on a little every night. One warm-up, then four hard ones: linked data structures, a threaded HTTP server, an interpreter, and an async Redis clone. Between them they cover ownership, lifetimes, traits, smart pointers, concurrency, async and performance work.
+Five projects, worked on a little every night. One warm-up, then four hard ones: data structures, a threaded HTTP server, an interpreter, and an async Redis clone. Between them they cover ownership, lifetimes, traits, smart pointers, concurrency, async and performance work, plus the standard interview set of data structures.
 
 ## The ladder
 
 | #  | Project | Main Rust topics | Nights |
 |----|---------|------------------|--------|
 | 01 | [grep clone](docs/01-grep.md) | lifetimes, iterators, traits, `thiserror`/`anyhow`, tests | 6 |
-| 02 | [Your own data structures](docs/02-data-structures.md) | generics, lifetimes in structs, `Rc<RefCell>`, std traits | 10 |
+| 02 | [Your own data structures](docs/02-data-structures.md) | generics, lifetimes in structs, `Rc<RefCell>`, std traits, const generics; every common structure, plus rebuild drills for Rust interview rounds | 24 |
 | 03 | [HTTP server from scratch](docs/03-http-server.md) | TCP, threads, `Send`/`Sync`, `Arc<Mutex>`, channels | 11 |
 | 04 | [Monkey interpreter](docs/04-monkey-interpreter.md) | large enums, Pratt parsing, shared environments, golden tests | 14 |
 | 05 | [Redis clone](docs/05-redis-clone.md) | async/tokio, byte parsing, zero-copy, persistence, profiling | 20 |
 
-At 30–60 minutes a night, five nights a week, that is roughly three months.
+At 30–60 minutes a night, five nights a week, that is roughly three and a half months.
 
 Project 04 follows Thorsten Ball's *Writing An Interpreter In Go* (chapters 1–4), ported to idiomatic Rust.
 
