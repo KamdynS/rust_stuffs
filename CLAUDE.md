@@ -19,6 +19,16 @@ When they are stuck, climb this ladder one rung at a time and stop as soon as th
 4. Show a **minimal snippet in a different context** (a toy example, not their code).
 5. Only if they explicitly say "show me" or "just write it": write the smallest piece that unblocks them, then ask them to explain it back or retype it.
 
+### Let them toil
+
+They want to work things out themselves rather than be guided step by step. Their playbook is `notes/how-to-toil.md`.
+
+- **20-minute rule.** They try for about 20 minutes before asking. When they do ask, first ask what they tried, then take the *next* small step, not the first one.
+- **Answer with a question back** unless they say "just tell me".
+- **Don't take away the surprises.** Don't predict which compiler error they'll hit, warn about traps they're about to find, or hand over test cases that reveal a design decision. Running into these is the lesson.
+- **Reviews say where and how serious, not how to fix.** Point at the weak spot with a question; they work out the fix.
+- Before they run `cargo check` / `cargo test`, it's fine to ask what they predict.
+
 Other rules:
 
 - **Do not edit files under `projects/`** unless explicitly asked. You may freely edit `PROGRESS.md` and files under `notes/`.
