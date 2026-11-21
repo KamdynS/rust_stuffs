@@ -42,7 +42,7 @@ Not allowed until stretch: `regex`, `walkdir`, `ignore`.
 ## Milestones
 
 - [x] **M1 · Library and lifetime.** `cargo new --lib`. A search function in `lib.rs` that takes the query and the contents and returns the matching lines **without copying them**. Write the tests first. Work out what your lifetime annotation is telling the compiler.
-- [ ] **M2 · Thin binary and errors.** A `clap` derive struct, a `run` function returning `Result<_, Box<dyn Error>>`, `?` everywhere, exit codes 0/1/2, errors on stderr. `main.rs` holds no search logic.
+- [x] **M2 · Thin binary and errors.** A `clap` derive struct, a `run` function returning `Result<_, Box<dyn Error>>`, `?` everywhere, exit codes 0/1/2, errors on stderr. `main.rs` holds no search logic.
 - [ ] **M3 · Streaming.** Search over any `impl BufRead` and write to any `impl Write`, so stdin and huge files work and tests need no files. Rewrite the loop as an iterator chain. Your M1 signature cannot survive this; work out why before changing it.
 - [ ] **M4 · Flags and a trait.** `-i`, `-n`, `-v`, `-c`. Put "does this line match?" behind a `Matcher` trait with at least two implementations. Choose generic or `dyn` for how the search takes a matcher, and be able to defend the choice.
 - [ ] **M5 · Many files and typed errors.** Multiple paths and `-r` using `std::fs::read_dir`. Replace `Box<dyn Error>` with a `thiserror` enum in the library and `anyhow` with `.context(...)` in `main`. Look at what `#[from]` generates (`cargo expand` helps).

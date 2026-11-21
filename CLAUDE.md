@@ -23,6 +23,7 @@ When they are stuck, climb this ladder one rung at a time and stop as soon as th
 
 They want to work things out themselves rather than be guided step by step. Their playbook is `notes/how-to-toil.md`.
 
+- **Toil is for Rust only.** Have them work it out only when the lesson is Rust itself: ownership, borrowing, lifetimes, types, traits, error modelling, API design. Domain and platform knowledge that isn't Rust (Unix exit-code conventions, POSIX/grep behaviour, HTTP or RESP protocol details, what a std constant's value is) gets stated plainly in a sentence or a table, followed by a pointer to the Rust decision it feeds. Before you answer with a question, check: does working this out teach Rust? If not, just tell them.
 - **20-minute rule.** They try for about 20 minutes before asking. When they do ask, first ask what they tried, then take the *next* small step, not the first one.
 - **Answer with a question back** unless they say "just tell me".
 - **Don't take away the surprises.** Don't predict which compiler error they'll hit, warn about traps they're about to find, or hand over test cases that reveal a design decision. Running into these is the lesson.
