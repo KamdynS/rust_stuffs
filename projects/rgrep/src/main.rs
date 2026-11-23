@@ -1,4 +1,5 @@
-use std::fs;
+use std::fs::File;
+use std::io::BufReader;
 use std::path::PathBuf;
 use std::process::ExitCode;
 
@@ -38,8 +39,9 @@ fn main() -> ExitCode {
 }
 
 fn run(cli: Cli) -> Result<RunOutput, Box<dyn std::error::Error>> {
-    let content = fs::read_to_string(cli.file_name)?;
-    let result = search(&content, &cli.pattern);
+    let file = File::open(cli.file_name)?;
+    let buffer = BufReader::new(file);
+    let result = search(buffer, &cli.pattern)?;
     if result.is_empty() {
         return Ok(RunOutput::NotFound);
     }

@@ -1,11 +1,23 @@
-pub fn search<'a>(input: &'a str, pattern: &str) -> Vec<&'a str> {
+use std::io::BufRead;
+use std::io::Error;
+
+pub fn search<T: BufRead>(mut file: T, pattern: &str) -> Result<Vec<String>, Error> {
     let mut out = Vec::new();
-    for line in input.lines() {
-        if line.contains(pattern) {
-            out.push(line)
+    let mut line = String::new();
+
+    loop {
+        let bytes = file.read_line(&mut line)?;
+        if bytes == 0 {
+            break;
         }
+
+        if line.contains(pattern) {
+            out.push(std::mem::take(&mut line));
+        }
+        line.clear();
     }
-    out
+
+    Ok(out)
 }
 
 #[cfg(test)]
