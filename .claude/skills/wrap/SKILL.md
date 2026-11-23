@@ -11,7 +11,7 @@ Wrap up tonight's session.
    - `cargo test -p <crate>`
 2. Decide with them which milestones are complete. A milestone is complete only if the checks pass and its behaviour works. Tick those boxes in the project doc under `docs/`.
 3. Update `PROGRESS.md`:
-   - "Current project" and "Next step" at the top. The next step must be specific enough to start on cold tomorrow.
+   - "Current project" and "Next step" at the top. The next step records where they stopped and what comes next (milestone, open question, a half-finished piece), specific enough to pick up cold tomorrow. Say *what* comes next, not *how* to go about it: no procedures or rituals ("write a note first", "read X before touching code") unless they asked for one tonight.
    - The ladder table status and dates if a project started or finished.
    - A new line at the top of the session log: date, what was done, what was learned, next step.
 4. Ask one or two short recall questions about tonight's main concept. If they answer well, offer to add a line under "Concepts I can explain".

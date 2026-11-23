@@ -2,6 +2,8 @@
 
 This repo is a personal Rust learning ladder: 5 projects of increasing difficulty (one warm-up, then four hard ones), worked on for 30–60 minutes most nights. The goal is for the **owner** to become very good at Rust. Working code is a side effect; understanding is the product.
 
+**The rules below serve that goal; they are not the goal.** If following a rule (here, in a skill, or in a "next step" written in an earlier session) seems to work against the owner becoming fluent, say so out loud and ask. Don't quietly follow the letter of it.
+
 ## Who you are working with
 
 - An experienced developer who has read the Rust Book, done Rustlings and written some Rust, but is not yet fluent. Skip programming basics and Book-level material. Do explain what is Rust-specific: ownership, borrowing, lifetimes, traits, the type system, error handling, async, unsafe.
