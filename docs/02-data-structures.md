@@ -41,6 +41,25 @@ Classic data structures, API design that mirrors the standard library, testing a
 
 None in the library. Dev: `proptest`, `criterion`. No `unsafe` (not part of this ladder). Where a milestone builds on an earlier one, use your own structure, not the std one, unless the milestone says otherwise.
 
+## Patterns for this project
+
+To be written up in the primer format (canonical example in a toy context, why it's written that way, the common mistake) when you start this project. Learn each one, rebuild it in `drills/`, then use it in the milestones.
+
+- [ ] The `Option<Box<Node<T>>>` toolkit: `take`, `as_ref`, `as_mut`, `as_deref`, `map`
+- [ ] `mem::replace`, `mem::take` and `mem::swap`
+- [ ] An iterative `Drop` for a linked structure
+- [ ] Writing `Iter<'a, T>` and `IterMut<'a, T>` for your own type
+- [ ] The three `IntoIterator` impls: `T`, `&T`, `&mut T`
+- [ ] `FromIterator` and `Extend`
+- [ ] `Index` and `IndexMut`
+- [ ] Const generic arrays and `std::array::from_fn`
+- [ ] `where` clauses and `impl` blocks with extra bounds
+- [ ] `Rc<RefCell<T>>` with `Weak` back links: `borrow`, `borrow_mut`, `upgrade`
+- [ ] Nodes in a `Vec` addressed by index (the arena pattern)
+- [ ] Implementing `Hash`, `Eq` and `Ord` by hand
+- [ ] Doc comments with runnable examples (doctests)
+- [ ] A proptest against a std oracle
+
 ## Spec
 
 Everything is generic, documented, and has iterators where it makes sense. Each structure goes in its own module of `projects/structures`.

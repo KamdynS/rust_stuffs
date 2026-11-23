@@ -1,0 +1,9 @@
+[package]
+name = "drills"
+version = "0.1.0"
+edition = "2024"
+publish = false
+
+# Add a dependency only when a drill needs it, and only one the drill's
+# source doc allows.
+[dependencies]

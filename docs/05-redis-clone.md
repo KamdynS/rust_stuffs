@@ -34,6 +34,25 @@ Reading a protocol specification, wire compatibility with existing clients, dura
 
 Not allowed: parser-combinator crates, existing RESP or Redis implementation crates.
 
+## Patterns for this project
+
+To be written up in the primer format (canonical example in a toy context, why it's written that way, the common mistake) when you start this project. Learn each one, rebuild it in `drills/`, then use it in the milestones.
+
+- [ ] `#[tokio::main]` and a `tokio::spawn` accept loop
+- [ ] Shared state in async code: std `Mutex` vs tokio `Mutex`, guards dropped before `.await`
+- [ ] A `BytesMut` read buffer filled with `read_buf`
+- [ ] Incremental parsing over `&[u8]` with a cursor
+- [ ] `Buf` and `BufMut`
+- [ ] `TryFrom<Frame>` for a command enum
+- [ ] `tokio::select!` in a loop
+- [ ] `broadcast` channels
+- [ ] A background task on `tokio::time::interval`
+- [ ] Code generic over `AsyncRead + AsyncWrite + Unpin`, tested with `tokio::io::duplex`
+- [ ] `Cow` and borrowed views into a buffer
+- [ ] `BufWriter` and choosing when to flush
+- [ ] `tracing` spans and events
+- [ ] A `criterion` benchmark
+
 ## Spec
 
 - Speaks RESP2 over TCP on port 6379 (configurable). Works with the real `redis-cli` and `redis-benchmark`.

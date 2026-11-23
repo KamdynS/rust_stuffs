@@ -31,6 +31,22 @@ Language implementation (lexer, parser, evaluator), operator precedence, error r
 None in the interpreter. `rustyline` for the REPL. Dev: `insta` for snapshot tests if you want them.
 Not allowed: parser generators or combinator crates (`nom`, `pest`, `lalrpop`, `chumsky`, ...).
 
+## Patterns for this project
+
+To be written up in the primer format (canonical example in a toy context, why it's written that way, the common mistake) when you start this project. Learn each one, rebuild it in `drills/`, then use it in the milestones.
+
+- [ ] Recursive enums with `Box`
+- [ ] Implementing `Iterator` for a lexer
+- [ ] `Peekable`, `next_if` and `peek` for lookahead
+- [ ] `Display` for a recursive tree
+- [ ] Collecting several errors into a `Vec` instead of stopping at the first
+- [ ] `?` through a recursive tree walk
+- [ ] Nested scopes with `Rc<RefCell<...>>` parent links
+- [ ] Function pointers, closures and `dyn Fn` side by side
+- [ ] Deriving `Hash` and `Eq` for a key enum
+- [ ] File-driven (golden) tests
+- [ ] Checking type sizes with `size_of`
+
 ## Spec
 
 Everything in the book's chapters 1–4:

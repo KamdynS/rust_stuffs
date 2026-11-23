@@ -22,28 +22,38 @@ Project 04 follows Thorsten Ball's *Writing An Interpreter In Go* (chapters 1–
 2. Install rust-analyzer in your editor.
 3. Optional but useful: `cargo install cargo-watch cargo-expand`.
 
+## Learn → drill → apply
+
+Fluent Rust developers know a vocabulary of patterns cold: how to read a file line by line, how to write to any writer, how to collect a list of `Result`s. Discovering those through compiler errors is slow and doesn't stick, so the ladder teaches them like algorithm templates:
+
+1. **Learn.** Each project doc opens with "Patterns for this project": a canonical example of each idiom in a toy context, why it's written that way, and the common mistake. Project 01's is written; the others list the pattern names and get written up when you start them. Learn each pattern when a milestone needs it, not the whole primer at once.
+2. **Drill.** Rebuild each pattern from memory as a module in `drills/`, with a test, on a spaced schedule (1 day, 3 days, 1 week, 2 weeks, then when a new project uses it). `drills/README.md` tracks what's due.
+3. **Apply.** Use the patterns in the milestones. Choosing between them and fitting them to the project is the hard part, and that's where you work things out yourself.
+
 ## How a night goes
 
-1. Open `PROGRESS.md`. It says which milestone is next.
-2. Open that project's doc. Read the milestone, not the whole doc.
-3. Code for 30–60 minutes. Stop mid-task on purpose and write the next step down, so tomorrow starts fast.
-4. `cargo fmt`, `cargo clippy`, `cargo test`, commit.
+1. Up to ten minutes on whatever drills are due.
+2. Open `PROGRESS.md`. It says which milestone is next.
+3. Open that project's doc. Read the milestone, not the whole doc, and learn any pattern it needs that you don't know yet.
+4. Code for 30–60 minutes. Stop mid-task on purpose and write the next step down, so tomorrow starts fast.
+5. `cargo fmt`, `cargo clippy`, `cargo test`, commit.
 
 Start each project with `cargo new projects/<name>` from the repo root; the workspace picks it up automatically.
 
 ## Working with Claude Code
 
-`CLAUDE.md` sets Claude up as a tutor: it gives hints, explains errors and reviews code, and does not write the solutions unless you explicitly ask. Four commands are included:
+`CLAUDE.md` sets Claude up as a tutor: it teaches patterns directly, gives hints on design, explains errors and reviews code, and does not write your project or drill code unless you explicitly ask. Five commands are included:
 
-- `/tonight` picks up where you left off and proposes tonight's slice.
+- `/tonight` runs the drills that are due, then picks up where you left off and proposes tonight's slice.
+- `/pattern <name>` teaches one pattern in the primer format and has you rebuild it as a drill.
 - `/hint` gives the smallest nudge that could unblock you. Run it again for a bigger one.
 - `/review` reviews your current work for correctness and idiomatic Rust.
-- `/wrap` runs the checks, updates `PROGRESS.md`, and quizzes you briefly.
+- `/wrap` runs the checks, updates `PROGRESS.md` and the drills table, and quizzes you briefly.
 
 ## Rules of the ladder
 
-- Type every line yourself.
-- Try before you read. The docs name a concept; attempt the milestone, then read the chapter when you hit the wall.
+- Type every line yourself, drills included.
+- Learn patterns first, then try the milestone. Design decisions are yours to work out; when you hit a wall that isn't a pattern, read the chapter the doc points to.
 - Each doc has an "Allowed crates" list. Stick to it; the limits are where the learning is.
 - A project is done when its "Done when" list is true, not when it compiles.
 - Finish the core milestones before stretch goals.

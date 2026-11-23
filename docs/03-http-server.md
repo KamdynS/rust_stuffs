@@ -29,6 +29,22 @@ HTTP/1.1 on the wire, routing, static file serving, path traversal defence, time
 
 **None.** `std` only. External tools for testing: `curl`, and a load tester such as `oha` or `wrk`.
 
+## Patterns for this project
+
+To be written up in the primer format (canonical example in a toy context, why it's written that way, the common mistake) when you start this project. Learn each one, rebuild it in `drills/`, then use it in the milestones.
+
+- [ ] An accept loop over `TcpListener::incoming`
+- [ ] Reading and writing the same `TcpStream`
+- [ ] Parsing into types with `FromStr` and `TryFrom`
+- [ ] `thread::spawn` with a `move` closure, and `JoinHandle::join`
+- [ ] `Arc<Mutex<T>>`, and keeping the guard's scope small
+- [ ] Atomics for counters
+- [ ] A worker loop fed by an `mpsc` channel
+- [ ] Boxed closures in a map: `Box<dyn Fn(...) + Send + Sync>`
+- [ ] `Drop` for cleanup
+- [ ] Catching a panic at a boundary with `catch_unwind`
+- [ ] An integration test against a server on port 0
+
 ## Spec
 
 - Listens on an address given on the command line (default `127.0.0.1:8080`).
