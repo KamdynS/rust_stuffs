@@ -3,3 +3,4 @@
 //!
 //! To add a drill, create `src/<name>.rs` and declare it below with
 //! `pub mod <name>;`.
+pub mod reading_lines;

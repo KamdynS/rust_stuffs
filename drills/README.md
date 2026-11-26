@@ -35,7 +35,7 @@ The larger structure rebuilds in project 02 ("Rebuild drills" in its doc) keep t
 
 | Pattern | Source doc | First learned | Rebuild dates |
 |---------|------------|---------------|---------------|
-| Reading lines from a file or stdin | [01](../docs/01-grep.md#1--reading-lines-from-a-file-or-stdin) | | |
+| Reading lines from a file or stdin | [01](../docs/01-grep.md#1--reading-lines-from-a-file-or-stdin) | 11-24 | 11-25 · 11-27 · 12-01 · 12-08 |
 | Writing to `&mut impl Write` | [01](../docs/01-grep.md#2--writing-to-mut-impl-write) | | |
 | Collecting `Result`s into `Result<Vec<_>, _>` | [01](../docs/01-grep.md#3--collecting-results-into-resultvec_-_) | | |
 | Iterator chains, and when a loop is clearer | [01](../docs/01-grep.md#4--iterator-chains-and-when-a-loop-is-clearer) | | |
