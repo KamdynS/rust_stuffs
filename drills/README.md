@@ -35,10 +35,5 @@ The larger structure rebuilds in project 02 ("Rebuild drills" in its doc) keep t
 
 | Pattern | Source doc | First learned | Rebuild dates |
 |---------|------------|---------------|---------------|
-| Reading lines from a file or stdin | [01](../docs/01-grep.md#1--reading-lines-from-a-file-or-stdin) | 11-24 | 11-25 · 11-27 · 12-01 · 12-08 |
-| Writing to `&mut impl Write` | [01](../docs/01-grep.md#2--writing-to-mut-impl-write) | | |
-| Collecting `Result`s into `Result<Vec<_>, _>` | [01](../docs/01-grep.md#3--collecting-results-into-resultvec_-_) | | |
-| Iterator chains, and when a loop is clearer | [01](../docs/01-grep.md#4--iterator-chains-and-when-a-loop-is-clearer) | | |
-| `impl Trait`, generics and `dyn` in arguments | [01](../docs/01-grep.md#5--impl-trait-generics-and-dyn-in-arguments) | | |
-| A `thiserror` enum in the library, `anyhow` in the binary | [01](../docs/01-grep.md#6--a-thiserror-enum-in-the-library-anyhow-in-the-binary) | | |
-| A bounded window with `VecDeque` | [01](../docs/01-grep.md#7--a-bounded-window-with-vecdeque) | | |
+
+Project 01 (*Command-Line Rust*) has no drills: the book repeats its patterns across chapters. Its primer in `docs/01-command-line-rust.md` stays as reference. `src/reading_lines.rs` is kept but off the schedule. Drills start again with project 02.

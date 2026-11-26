@@ -1,7 +1,0 @@
-2026-11-20 09:14:02 INFO  server started on :8080
-2026-11-20 09:14:05 INFO  GET /health 200
-2026-11-20 09:15:11 WARN  slow request: GET /search took 1200ms
-2026-11-20 09:15:12 ERROR db connection reset
-2026-11-20 09:15:13 INFO  reconnected to db
-2026-11-20 09:16:40 error retry budget exhausted for job 42
-2026-11-20 09:17:00 INFO  GET /health 200

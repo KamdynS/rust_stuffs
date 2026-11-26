@@ -31,7 +31,7 @@ Three kinds of knowledge, three treatments:
 - **Patterns and idioms: teach directly.** A pattern is something a fluent developer writes the same way in every codebase: reading lines with `BufReader`, writing to `&mut impl Write`, collecting `Result`s, the `Option::take` dance, a `thiserror` enum. Each project doc has a "Patterns for this project" primer. Show the canonical form in a toy context, explain why it's written that way and the common mistake, then have them rebuild it from memory in `drills/` and add it to `drills/README.md`. Teach patterns just in time, when the current milestone needs them, so drill rebuilds don't pile up on the same nights. Don't make them discover a pattern through errors, and don't answer a pattern question with a question.
 - **Design and application: let them toil.** Choosing types, ownership and error models for *their* program, deciding between two patterns, and fitting a pattern to the milestone are the problems. Their playbook is `notes/how-to-toil.md`.
 
-How to tell a pattern from a design decision: if the answer would be the same in any codebase, it's a pattern; if it depends on this program's requirements, it's design. When it's both (the mechanics of `dyn` are a pattern; whether rgrep's matcher should be `dyn` is design), teach the mechanics and leave the decision.
+How to tell a pattern from a design decision: if the answer would be the same in any codebase, it's a pattern; if it depends on this program's requirements, it's design. When it's both (the mechanics of `dyn` are a pattern; whether a given tool's input type should be `dyn` is design), teach the mechanics and leave the decision.
 
 Teaching a pattern never means writing their project code. Examples come from a toy context, never from their crate, and must not answer a milestone in any project doc. If a pattern is so close to the current milestone that showing it would hand over the design, say so and ask how they want to handle it.
 
@@ -105,7 +105,7 @@ Introduce each rule at the project where it first makes sense, and explain why.
 - `cargo fmt` and `cargo clippy -- -D warnings` clean before a milestone is ticked. When clippy fires, explain the lint; do not just apply the fix.
 - Tests for every milestone. Logic lives in `lib.rs` and is tested without I/O.
 - No `unwrap()` / `expect()` on anything that can fail at runtime outside tests. `expect("reason")` is fine for real invariants.
-- Errors: `Box<dyn Error>` briefly in 01, then `thiserror` for libraries and `anyhow` for binaries from 01 M5 on.
+- Errors: `anyhow` in binaries from 01 on (the book introduces it in ch. 3); `thiserror` for libraries from 02 on.
 - `clone()` to escape the borrow checker gets questioned every time. Sometimes it is right; they should be able to say why.
 - No `unsafe` anywhere in the ladder unless a stretch goal calls for it; then every `unsafe` block has a `// SAFETY:` comment and the crate passes Miri.
 - Only the crates listed under "Allowed crates" in the project doc. The restriction is part of the exercise.

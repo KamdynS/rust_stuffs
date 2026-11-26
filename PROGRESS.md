@@ -1,13 +1,13 @@
 # Progress
 
-**Current project:** 01 · grep clone
-**Next step:** 01 M3, part 2. The unit tests don't compile yet: they still pass `&str` and compare a `Result` with a `Vec`. You decided `search` should strip the line ending (so `main` goes back to `println!`), but that isn't done yet. After that, the rest of M3: write matches to an `impl Write` instead of returning `Vec<String>`, and rewrite the loop as an iterator chain. Open question: why `Vec<String>` now, when M1 could return `Vec<&str>`?
+**Current project:** 01 · Command-Line Rust (book)
+**Next step:** 01 M1, chapter 6 (uniqr). Follow "How to work a chapter" in `docs/01-command-line-rust.md`: the tests are already in `projects/uniqr/tests/`; read up to the solution, write your own, then compare.
 
 ## Ladder
 
 | #  | Project | Status | Started | Finished |
 |----|---------|--------|---------|----------|
-| 01 | grep clone | in progress (M1–M2 done) | 2026-11-18 | |
+| 01 | Command-Line Rust (book) | not started (replaces grep clone) | 2026-11-26 | |
 | 02 | Your own data structures | not started | | |
 | 03 | HTTP server from scratch | not started | | |
 | 04 | Monkey interpreter | not started | | |
@@ -29,6 +29,7 @@ Add a line when a concept clicks. If you cannot explain it to someone else, it d
 
 Newest first. One line per night: date, what was done, what was learned, exact next step.
 
+- **2026-11-26** · Replaced project 01 (home-grown grep clone) with *Command-Line Rust* (Youens-Clark, 2024 update, clap v4 derive): chapters 6 (uniqr), 7 (findr), 8 (cutr), 9 (grepr), with 11 (tailr) optional; 1–3 done earlier, outside this repo. Reason: many small tools with ready-made tests give more reps of the same patterns than one grep. Each chapter's crate is pre-made with the book's tests copied in (no solution code); write your own version, then read the author's solution and log the comparison. Retired `projects/rgrep` at M3 part 1 (in git history); dropped 01's drills, since the book repeats its patterns; kept the 01 primer as reference; switched the error standard to `anyhow` in binaries from 01 on. Next: see top.
 - **2026-11-23** · Changed how the ladder teaches: learn → drill → apply. Discovering idioms through compiler errors (11-22) was slow and didn't stick, so patterns are now taught directly, like DSA templates, and toil is kept for design decisions and for applying patterns in the project. Added a "Patterns for this project" primer to every doc (written in full for 01: seven patterns with toy examples; names only for 02–05), a `drills/` library crate with a spaced rebuild schedule in `drills/README.md`, a `/pattern` skill, a drill at the start of `/tonight` and a new-pattern check in `/wrap`; rewrote CLAUDE.md's "Let them toil" section and updated README and `notes/how-to-toil.md` to match. Next: unchanged, see top.
 
 - **2026-11-22** · 01 M3, part 1. `search<T: BufRead>(mut file: T, pattern: &str) -> Result<Vec<String>, io::Error>` loops over `read_line` with one reused buffer and moves matches out with `std::mem::take`; `run` opens the file with `File::open` + `BufReader::new` and puts `?` at the binding. Binary compiles and works on the fixtures (with `print!` for now); clippy is clean on lib + bin; the unit tests don't compile yet. Learned: `Read` vs `BufRead` (`File` isn't buffered, so wrap it); `impl Trait` in argument position is sugar for a generic; `lines()` yields `io::Result<String>`, so every line can fail and `?` handles it; nested types in an error message read inside out; Rust never wraps a return value in `Ok` for you; `Result` implements `IntoIterator` (a `for` over it runs 0 or 1 times), which explained a `Vec<String>: Display` error; `mem::take` moves a value out from behind `&mut` and leaves `Default` in its place, taking the heap buffer (and its capacity) along; Rust "patterns" are destructuring (`match`/`if let`/`let-else`), not regex; `&[u8]` (via `.as_bytes()`) is a test-friendly `BufRead`, but a bare `b"..."` is `&[u8; N]`. Also: added the "rules serve the goal" line to CLAUDE.md, changed `/wrap` so next steps say *what*, not *how*, and saved a prose-tone preference. Next: see top.

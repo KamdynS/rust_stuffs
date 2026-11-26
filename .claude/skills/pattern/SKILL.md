@@ -7,7 +7,7 @@ Teach the pattern named in `$ARGUMENTS`. If no name is given, use the next queue
 
 1. **Find it.** Read `PROGRESS.md` for the current project, then look for the pattern in that project's doc under "Patterns for this project", and in the other docs if it's not there.
    - Written up already: teach from that entry.
-   - Listed but not written up (the 02–05 checklists): write the entry into that doc's primer first, in the same format as `docs/01-grep.md`, then teach from it.
+   - Listed but not written up (the 02–05 checklists): write the entry into that doc's primer first, in the same format as `docs/01-command-line-rust.md`, then teach from it.
    - Not listed anywhere: teach it, and add it to the current project's list once they agree it's worth drilling.
 2. **Check for spoilers** before showing anything. The example must be a toy program, never their crate, and must not answer any milestone in any project doc. If the pattern is so close to the current milestone that showing it would hand over a design decision, say so and ask how they want to handle it. If the request is really a design question for their project ("should my search take `dyn`?"), say it's design, teach the mechanics only, and leave the decision to them.
 3. **Check the API.** For a third-party crate, check the version in `Cargo.lock` (or the latest release if it isn't a dependency yet) and the docs for that version. Compile the example in a scratch crate outside the workspace before showing it.

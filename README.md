@@ -6,13 +6,13 @@ Five projects, worked on a little every night. One warm-up, then four hard ones:
 
 | #  | Project | Main Rust topics | Nights |
 |----|---------|------------------|--------|
-| 01 | [grep clone](docs/01-grep.md) | lifetimes, iterators, traits, `thiserror`/`anyhow`, tests | 6 |
+| 01 | [Command-Line Rust](docs/01-command-line-rust.md) (book, ch. 6–9) | clap, `BufRead`/`Write`, `anyhow`, iterators, enums, regex, binary tests | 11 |
 | 02 | [Your own data structures](docs/02-data-structures.md) | generics, lifetimes in structs, `Rc<RefCell>`, std traits, const generics; every common structure, plus rebuild drills for Rust interview rounds | 24 |
 | 03 | [HTTP server from scratch](docs/03-http-server.md) | TCP, threads, `Send`/`Sync`, `Arc<Mutex>`, channels | 11 |
 | 04 | [Monkey interpreter](docs/04-monkey-interpreter.md) | large enums, Pratt parsing, shared environments, golden tests | 14 |
 | 05 | [Redis clone](docs/05-redis-clone.md) | async/tokio, byte parsing, zero-copy, persistence, profiling | 20 |
 
-At 30–60 minutes a night, five nights a week, that is roughly three and a half months.
+At 30–60 minutes a night, five nights a week, that is roughly four months.
 
 Project 04 follows Thorsten Ball's *Writing An Interpreter In Go* (chapters 1–4), ported to idiomatic Rust.
 
