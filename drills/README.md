@@ -4,9 +4,9 @@ Patterns you should be able to write cold. Each one is a module in `src/` that y
 
 ## How a drill works
 
-**Learning it.** Read the pattern in its project doc (or run `/pattern <name>`). Close the doc. Write `src/<name>.rs` from memory: a small function or type in a toy context, plus a `#[cfg(test)] mod tests` that checks the behaviour the pattern exists for. Add `pub mod <name>;` to `src/lib.rs` and a row to the table below. If the first attempt needed the doc open, that's fine; the rebuilds are what make it stick.
+**Learning it.** Run `/pattern <name>` (or read the pattern in its project doc). Claude names a toy task. Close the doc and write the signature from memory in `src/<name>.rs` with a `todo!()` body, then add `pub mod <name>;` to `src/lib.rs`. Claude checks the signature: if it's off, you're told where and how much it matters, not what to write, and you fix it. Then Claude writes the `#[cfg(test)] mod tests` against your signature, and you write the body. You don't write the tests: the signature and the body are the pattern, and the `assert_eq!`s aren't. Add a row to the table below. If the first attempt needed the doc open, that's fine; the rebuilds are what make it stick.
 
-**Rebuilding it.** Delete everything in the file above `#[cfg(test)]`. Keep the tests. Retype the code with no docs and no editor completion beyond what you'd have in an interview. Then:
+**Rebuilding it.** Delete everything in the file above `#[cfg(test)]`, signature included. Keep the tests: they now also check that you remembered the same API. Retype the code with no docs and no editor completion beyond what you'd have in an interview. Then:
 
 ```
 cargo test -p drills <name>
